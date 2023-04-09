@@ -1,33 +1,81 @@
 package org.example.Time;
 
 public class Datum {
-	private Day day;
+	private Day weekday;
 	private int yy;
 	private int mm;
 	private int dd;
-	private Time time;
 
 	private static final int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-	public Datum(Day day, int yy, int mm, int dd) {
-		this.day = day;
+	public Datum(Day weekday, int yy, int mm, int dd) {
+		this.weekday = weekday;
 		this.yy = yy;
 		this.mm = mm;
 		this.dd = dd;
 	}
-	public Datum withTime(Time time) {
-		this.time = time;
-		return this;
+
+	public Day getWeekday() {
+		return weekday;
 	}
 
-	public void addTime(Time t) {
-		Time temp = time;
-		// hours to min
-		time.add(60 * t.getHour() + t.getMin());
-		// check for overflow
-		if (time.compareTo(temp) == -1) {
-			// overflow, do add some days and stuff
+	public int getYear() {
+		return yy;
+	}
+
+	public int getMonth() {
+		return mm;
+	}
+
+	public int getDay() {
+		return dd;
+	}
+
+	public void setWeekday(Day day) {
+		this.weekday = day;
+	}
+	public void setYear(int year) {
+		this.yy = year;
+	}
+	public void setMonth(int mm) {
+		this.mm = mm;
+	}
+	public void setDay(int dd) {
+		this.dd = dd;
+	}
+
+	public void add(Datum d) {
+		this.weekday.add(d.getWeekday());
+
+	}
+
+	@Override
+	public boolean equals(Object d) {
+		if (!(d instanceof Datum)) {
+			return super.equals(d);
 		}
+		return this.toString().equals(d.toString())
+			&& this.getWeekday() == ((Datum) d).getWeekday();
 	}
 
+	@Override
+	public String toString() {
+		// yyyy-mm-dd
+		StringBuilder year = new StringBuilder(Integer.toString(yy));
+		if (year.length() < 4) {
+			// fill the front with zeroes
+			for (int i=0; i<4-year.length(); i++) {
+				year.insert(0, "0");
+			}
+		}
+		StringBuilder month = new StringBuilder(Integer.toString(mm));
+		if (mm < 10) {
+			month.insert(0, "0");
+		}
+		StringBuilder dayString = new StringBuilder(Integer.toString(dd));
+		if (dd < 10) {
+			dayString.insert(0, "0");
+		}
+		return year + "-" + month + "-" + dayString;
+	}
 }

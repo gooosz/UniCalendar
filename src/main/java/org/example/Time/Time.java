@@ -42,6 +42,12 @@ public class Time {
 		this.min = addedMin % 60;
 	}
 
+	public void subtract(int min) {
+		// may be < 0
+		int subtractedMin = this.min - min;
+
+	}
+
 	/**
 	 * @param t
 	 * @return 1, if this is greater than t

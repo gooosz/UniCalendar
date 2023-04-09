@@ -1,6 +1,7 @@
 package org.example.Modul;
 
 import org.example.Time.Time;
+import org.example.Time.Timeframe;
 
 import java.util.ArrayList;
 
@@ -10,14 +11,27 @@ public class Modul {
 	private ArrayList<Prof> profs;
 	private String room;	// hoersaal
 	private final VU type;	// vorlesung or uebung
-	private Time time;
+	private Timeframe timeframe;
 
 	public Modul(String name, VU type) {
 		this.name = name;
 		this.profs = new ArrayList<>();
 		this.room = "";
 		this.type = type;
-		this.time = new Time(0);
+		this.timeframe = new Timeframe(new Time(0));
+	}
+
+	public Modul(Modul m, VU type) {
+		/*
+		 * same name, profs
+		 * but else different
+		 * e.g. Vorlesung of modul, Uebung of same modul
+		*/
+		this.name = m.getName();
+		this.profs = m.getProfs();
+		this.room = "";
+		this.type = type;
+		this.timeframe = new Timeframe(new Time(0));
 	}
 	public Modul withProfs(ArrayList<Prof> profs) {
 		this.profs = profs;
@@ -27,12 +41,16 @@ public class Modul {
 		this.room = room;
 		return this;
 	}
-	public Modul withTime(Time t) {
-		this.time = t;
+	public Modul withTimeframe(Timeframe t) {
+		this.timeframe = t;
 		return this;
 	}
-	public Modul withTime(int h, int m) {
-		this.time = new Time(h, m);
+	public Modul withTimeframe(Time t1, Time t2) {
+		this.timeframe = new Timeframe(t1, t2);
+		return this;
+	}
+	public Modul withTimeframe(int h, int m) {
+		this.timeframe = new Timeframe(new Time(h, m));
 		return this;
 	}
 
@@ -49,8 +67,8 @@ public class Modul {
 		return type;
 	}
 
-	public Time getTime() {
-		return time;
+	public Timeframe getTimeframe() {
+		return timeframe;
 	}
 
 	// change of profs related stuff
@@ -69,7 +87,7 @@ public class Modul {
 		this.room = room;
 	}
 
-	public void setTime(Time time) {
-		this.time = time;
+	public void setTimeframe(Timeframe timeframe) {
+		this.timeframe = timeframe;
 	}
 }

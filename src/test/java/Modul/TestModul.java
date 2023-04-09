@@ -8,6 +8,7 @@ import org.example.Modul.Prof;
 import org.example.Modul.VU;
 import org.example.Time.Time;
 
+import org.example.Time.Timeframe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +21,7 @@ public class TestModul {
 		modul = new Modul("EidP", VU.Vorlesung)
 			.withProfs(new ArrayList<Prof>())
 			.withRoom("C120")
-			.withTime(new Time(0));
+			.withTimeframe(new Timeframe(new Time(0)));
 	}
 
 	@Test
@@ -29,7 +30,7 @@ public class TestModul {
 		assertEquals(0, modul.getProfs().size());
 		assertEquals("C120", modul.getRoom());
 		assertEquals(VU.Vorlesung, modul.getType());
-		assertEquals("00:00", modul.getTime().toString());
+		assertEquals("00:00", modul.getTimeframe().getStart().toString());
 	}
 
 	@Test
@@ -39,12 +40,12 @@ public class TestModul {
 		modul = new Modul("Mathe", VU.Vorlesung)
 				.withProfs(profs)
 				.withRoom("C118")
-				.withTime(new Time(15));
+				.withTimeframe(new Timeframe(new Time(15)));
 
 		assertEquals("Mathe", modul.getName());
 		assertEquals("Weil", modul.getProfs().get(0).getName());
 		assertEquals("C118", modul.getRoom());
-		assertEquals(new Time(15, 0), modul.getTime());
+		assertEquals(new Timeframe(new Time(15)), modul.getTimeframe());
 	}
 
 	@Test

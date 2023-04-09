@@ -70,4 +70,10 @@ public class TestTime {
 		Time t1 = new Time(t);
 		assertEquals(t, t1);
 	}
+
+	@Test
+	public void testEquals() {
+		Time t1 = new Time(t);
+		assertEquals(t, t1);
+	}
 }
