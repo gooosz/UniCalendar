@@ -6,13 +6,51 @@ public class Datum {
 	private int mm;
 	private int dd;
 
-	private static final int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private final int[] months;
 
-	public Datum(Day weekday, int yy, int mm, int dd) {
-		this.weekday = weekday;
+	public Datum(int yy, int mm, int dd) {
 		this.yy = yy;
 		this.mm = mm;
 		this.dd = dd;
+
+		if (isLeapYear()) {
+			months = new int[]{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		} else {
+			months = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		}
+	}
+
+	public Datum withWeekday(Day weekday) {
+		this.weekday = weekday;
+		return this;
+	}
+
+	public Datum(Datum datum) {
+		this.weekday = datum.getWeekday();
+		this.yy = datum.getYear();
+		this.mm = datum.getMonth();
+		this.dd = datum.getDay();
+
+		if (isLeapYear()) {
+			months = new int[]{31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		} else {
+			months = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		}
+	}
+
+	public int getImplicitWeekday() {
+		// called when no weekday is specified
+		// algorithm found on: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
+		int y = getYear();
+		if (!(getMonth() < 3)) {
+			y -= 1;
+		}
+		String idk = "-bed=pen+mad.";
+		int expr = y + y / 4 - y / 100 + y / 400;
+		expr += (int) idk.charAt(getMonth());
+		expr += getDay();
+		expr %= 7;
+		return expr;
 	}
 
 	public Day getWeekday() {
@@ -46,23 +84,43 @@ public class Datum {
 
 	public void addDay(int days) {
 		int sumOfDays = this.getDay() + days;
-
+		int daysInCurrentMonth = months[getMonth()-1];
+		while (sumOfDays > daysInCurrentMonth) {
+			sumOfDays %= daysInCurrentMonth;
+			addMonth(1);
+		}
+		setDay(sumOfDays);
 	}
 	public void addMonth(int months) {
-
+		int sumOfMonths = this.getMonth() + months;
+		// 12 months in a year
+		while (sumOfMonths > 12) {
+			sumOfMonths %= 12;
+			addYear(1);
+		}
+		setMonth(sumOfMonths);
 	}
 	public void addYear(int years) {
+		setYear(getYear() + years);
+	}
 
+	public boolean isLeapYear() {
+		int year = getYear();
+		/*
+		 * Every year is a leap year
+		 * that is divisible by 4
+		 * except for years that are divisible by 100
+		 * but years that are divisible by 400 are leap years
+		*/
+		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	}
 
 	public void add(Datum d) {
 		this.weekday = Day.add(this.getWeekday(), d.getWeekday());
-		// TODO: add Date ints together
-		/*
-		  * 2020 + 2020 = 2020
-		  * but 2020 + 2021 = 2021
-		*/
-		this.setYear(this.yy + Math.abs(this.getYear() - d.getYear()));
+
+		addDay(d.getDay());
+		addMonth(d.getMonth());
+		addYear(d.getYear());
 	}
 
 	@Override
