@@ -1,36 +1,45 @@
 package org.example.Time;
 
 public enum Day {
-	MONDAY(1),
-	TUESDAY(2),
-	WEDNESDAY(3),
-	THURSDAY(4),
-	FRIDAY(5),
-	SATURDAY(6),
-	SUNDAY(7);
+	MONDAY,
+	TUESDAY,
+	WEDNESDAY,
+	THURSDAY,
+	FRIDAY,
+	SATURDAY,
+	SUNDAY;
 
 
-	private int day;
-	Day(int d) {
-		day = d;
-	}
-	public int get() {
-		return day;
-	}
 	public static Day createDay(int d) {
 		if (d < 0 || d > Day.values().length) {
 			return null;
 		}
 		return Day.values()[d-1];
 	}
-	public void set(Day d) {
-		day = d.get();
+	public int get() {
+		return this.ordinal()+1;
 	}
 
-	public void add(int d) {
-		day = (day + d) % Day.values().length;	// mod amount of days
+	public static Day add(int d1, int d2) {
+		assert(d1 > 0 && d2 > 0);
+
+		int sum = d1 + d2;
+		int numOfDays = Day.values().length;
+		if (sum > numOfDays) {
+			// next week start over
+			sum %= numOfDays;
+		}
+		return createDay(sum);
 	}
-	public void add(Day d) {
-		day = (day + d.get()) % Day.values().length;	// mod amount of days
+	public static Day add(Day d1, Day d2) {
+		return add(d1.get(), d2.get());
+	}
+
+	public static Day add(Day d1, int d2) {
+		return add(d1.get(), d2);
+	}
+
+	public static Day add(int d1, Day d2) {
+		return add(d1, d2.get());
 	}
 }

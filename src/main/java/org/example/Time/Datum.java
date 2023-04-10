@@ -44,9 +44,25 @@ public class Datum {
 		this.dd = dd;
 	}
 
-	public void add(Datum d) {
-		this.weekday.add(d.getWeekday());
+	public void addDay(int days) {
+		int sumOfDays = this.getDay() + days;
 
+	}
+	public void addMonth(int months) {
+
+	}
+	public void addYear(int years) {
+
+	}
+
+	public void add(Datum d) {
+		this.weekday = Day.add(this.getWeekday(), d.getWeekday());
+		// TODO: add Date ints together
+		/*
+		  * 2020 + 2020 = 2020
+		  * but 2020 + 2021 = 2021
+		*/
+		this.setYear(this.yy + Math.abs(this.getYear() - d.getYear()));
 	}
 
 	@Override
