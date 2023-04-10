@@ -107,11 +107,28 @@ public class TestDatum {
 
 	@Test
 	public void testImplicitWeekday() {
-		Datum d2 = new Datum(2023, 4, 11);
-		for (int i=1; i<=7; i++) {
-			System.out.println(d2 + ": " + d2.getImplicitWeekday());
-			assertEquals(i%7, d2.getImplicitWeekday());
-			d2.addDay(1);
-		}
+		Datum monday = new Datum(2023, 4, 10);
+		assertEquals(Day.MONDAY, monday.getImplicitWeekday());
+
+		Datum tuesday = new Datum(2023, 4, 11);
+		assertEquals(Day.TUESDAY, tuesday.getImplicitWeekday());
+
+		Datum wednesday = new Datum(2023, 4, 12);
+		assertEquals(Day.WEDNESDAY, wednesday.getImplicitWeekday());
+
+		Datum thursday = new Datum(2023, 4, 13);
+		assertEquals(Day.THURSDAY, thursday.getImplicitWeekday());
+
+		Datum friday = new Datum(2023, 4, 14);
+		assertEquals(Day.FRIDAY, friday.getImplicitWeekday());
+
+		Datum saturday = new Datum(2023, 4, 15);
+		assertEquals(Day.SATURDAY, saturday.getImplicitWeekday());
+
+		Datum sunday = new Datum(2023, 4, 16);
+		assertEquals(Day.SUNDAY, sunday.getImplicitWeekday());
+
+		Datum monday2 = new Datum(2023, 4, 17);
+		assertEquals(Day.MONDAY, monday2.getImplicitWeekday());
 	}
 }

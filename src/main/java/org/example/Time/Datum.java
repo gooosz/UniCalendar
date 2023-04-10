@@ -38,7 +38,7 @@ public class Datum {
 		}
 	}
 
-	public int getImplicitWeekday() {
+	public Day getImplicitWeekday() {
 		// called when no weekday is specified
 		// algorithm found on: https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
 		int y = getYear();
@@ -50,7 +50,8 @@ public class Datum {
 		expr += (int) idk.charAt(getMonth());
 		expr += getDay();
 		expr %= 7;
-		return expr;
+		this.weekday = Day.createDay(expr + 1);
+		return getWeekday();
 	}
 
 	public Day getWeekday() {

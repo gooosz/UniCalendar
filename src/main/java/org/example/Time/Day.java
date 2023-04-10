@@ -10,8 +10,12 @@ public enum Day {
 	SUNDAY;
 
 
+	/**
+	 * @param d Day of week ranging from 1-7 (monday - sunday)
+	 * @return enum Day of that day of the week
+	 */
 	public static Day createDay(int d) {
-		if (d < 0 || d > Day.values().length) {
+		if (d <= 0 || d > Day.values().length) {
 			return null;
 		}
 		return Day.values()[d-1];
