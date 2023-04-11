@@ -1,17 +1,20 @@
 package Modul;
 
+import org.example.Helper.Pair;
 import org.example.Modul.Modul;
 
 import java.util.ArrayList;
 
 import org.example.Modul.Prof;
 import org.example.Modul.VU;
+import org.example.Time.Day;
 import org.example.Time.Time;
 
 import org.example.Time.Timeframe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestModul {
 	private Modul modul;
@@ -20,8 +23,7 @@ public class TestModul {
 	public void init() {
 		modul = new Modul("EidP", VU.Vorlesung)
 			.withProfs(new ArrayList<Prof>())
-			.withRoom("C120")
-			.withSchedule(Day.MONDAY, new ArrayList<>())
+			.withRoom("C120");
 	}
 
 	@Test
@@ -30,7 +32,7 @@ public class TestModul {
 		assertEquals(0, modul.getProfs().size());
 		assertEquals("C120", modul.getRoom());
 		assertEquals(VU.Vorlesung, modul.getType());
-		assertEquals("00:00", modul.getSchedule().get(0).getValue().getStart().toString());
+		assertTrue(modul.getSchedule().isEmpty());
 	}
 
 	@Test
@@ -39,13 +41,20 @@ public class TestModul {
 		profs.add(new Prof("Weil"));
 		modul = new Modul("Mathe", VU.Vorlesung)
 				.withProfs(profs)
-				.withRoom("C118")
-				.withTimeframe(new Timeframe(new Time(15)));
+				.withRoom("C118");
 
 		assertEquals("Mathe", modul.getName());
 		assertEquals("Weil", modul.getProfs().get(0).getName());
 		assertEquals("C118", modul.getRoom());
-		assertEquals(new Timeframe(new Time(15)), modul.getTimeframe());
+	}
+
+	@Test
+	public void testAddToSchedule() {
+		// schedule is empty
+		Timeframe tf = new Timeframe(new Time(10));
+		Pair<Day, Timeframe> pair = new Pair<>(Day.MONDAY, tf);
+		modul.addToSchedule(pair);
+		assertEquals(new Pair<>(Day.MONDAY, tf), modul.getSchedule().get(0));
 	}
 
 	@Test

@@ -18,10 +18,16 @@ public class Datum {
 		} else {
 			months = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 		}
+		this.weekday = getImplicitWeekday();
 	}
 
 	public Datum withWeekday(Day weekday) {
-		this.weekday = weekday;
+		// check if given weekday is correct
+		if (weekday == getImplicitWeekday()) {
+			this.weekday = weekday;
+		} else {
+			this.weekday = getImplicitWeekday();
+		}
 		return this;
 	}
 
@@ -36,6 +42,7 @@ public class Datum {
 		} else {
 			months = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 		}
+		this.weekday = getImplicitWeekday();
 	}
 
 	public Day getImplicitWeekday() {

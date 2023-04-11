@@ -22,7 +22,6 @@ public class Modul {
 		this.room = "";
 		this.type = type;
 		this.schedule = new ArrayList<>();
-		schedule.add(new Pair<>(Day.MONDAY, new Timeframe(new Time(0))));
 	}
 
 	public Modul(Modul m, VU type) {
@@ -50,16 +49,17 @@ public class Modul {
 		return this;
 	}
 
+	public void addToSchedule(Pair<Day, Timeframe> pair) {
+		schedule.add(pair);
+	}
 	public void addToSchedule(Day d, Timeframe t) {
 		schedule.add(new Pair<>(d, t));
 	}
-	public Modul withTimeframe(Day d, Time t1, Time t2) {
+	public void addToSchedule(Day d, Time t1, Time t2) {
 		schedule.add(new Pair<>(d, new Timeframe(t1, t2)));
-		return this;
 	}
-	public Modul withTimeframe(Day d, int h, int m) {
+	public void addToSchedule(Day d, int h, int m) {
 		schedule.add(new Pair<>(d, new Timeframe(new Time(h, m))));
-		return this;
 	}
 
 	public String getName() {
