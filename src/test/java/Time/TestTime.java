@@ -76,4 +76,20 @@ public class TestTime {
 		Time t1 = new Time(t);
 		assertEquals(t, t1);
 	}
+
+	@Test
+	public void testAdd() {
+		// time t is 10:00
+		Time t1 = new Time(12, 0);
+		t.add(t1.getHour() * 60 + t1.getMin());
+		assertEquals("22:00", t.toString());
+	}
+
+	@Test
+	public void subtract() {
+		// time t is 10:00
+		Time t1 = new Time(9, 0);
+		t.subtract(t1.getHour() * 60 + t1.getMin());
+		assertEquals("01:00", t.toString());
+	}
 }

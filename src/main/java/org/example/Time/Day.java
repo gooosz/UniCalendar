@@ -1,5 +1,7 @@
 package org.example.Time;
 
+// TODO: write more documentation for methods
+
 public enum Day {
 	MONDAY,
 	TUESDAY,

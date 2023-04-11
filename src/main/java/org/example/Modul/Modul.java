@@ -1,8 +1,11 @@
 package org.example.Modul;
 
+import org.example.Helper.Pair;
+import org.example.Time.Day;
 import org.example.Time.Time;
 import org.example.Time.Timeframe;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 // recursive generics for writing nice monads
@@ -11,14 +14,15 @@ public class Modul {
 	private ArrayList<Prof> profs;
 	private String room;	// hoersaal
 	private final VU type;	// vorlesung or uebung
-	private Timeframe timeframe;
+	private ArrayList<Pair<Day, Timeframe>> schedule;
 
 	public Modul(String name, VU type) {
 		this.name = name;
 		this.profs = new ArrayList<>();
 		this.room = "";
 		this.type = type;
-		this.timeframe = new Timeframe(new Time(0));
+		this.schedule = new ArrayList<>();
+		schedule.add(new Pair<>(Day.MONDAY, new Timeframe(new Time(0))));
 	}
 
 	public Modul(Modul m, VU type) {
@@ -31,7 +35,7 @@ public class Modul {
 		this.profs = m.getProfs();
 		this.room = "";
 		this.type = type;
-		this.timeframe = new Timeframe(new Time(0));
+		this.schedule = m.getSchedule();
 	}
 	public Modul withProfs(ArrayList<Prof> profs) {
 		this.profs = profs;
@@ -41,16 +45,20 @@ public class Modul {
 		this.room = room;
 		return this;
 	}
-	public Modul withTimeframe(Timeframe t) {
-		this.timeframe = t;
+	public Modul withSchedule(ArrayList<Pair<Day, Timeframe>> schedule){
+		this.schedule = schedule;
 		return this;
 	}
-	public Modul withTimeframe(Time t1, Time t2) {
-		this.timeframe = new Timeframe(t1, t2);
+
+	public void addToSchedule(Day d, Timeframe t) {
+		schedule.add(new Pair<>(d, t));
+	}
+	public Modul withTimeframe(Day d, Time t1, Time t2) {
+		schedule.add(new Pair<>(d, new Timeframe(t1, t2)));
 		return this;
 	}
-	public Modul withTimeframe(int h, int m) {
-		this.timeframe = new Timeframe(new Time(h, m));
+	public Modul withTimeframe(Day d, int h, int m) {
+		schedule.add(new Pair<>(d, new Timeframe(new Time(h, m))));
 		return this;
 	}
 
@@ -67,8 +75,8 @@ public class Modul {
 		return type;
 	}
 
-	public Timeframe getTimeframe() {
-		return timeframe;
+	public ArrayList<Pair<Day, Timeframe>> getSchedule() {
+		return schedule;
 	}
 
 	// change of profs related stuff
@@ -87,7 +95,7 @@ public class Modul {
 		this.room = room;
 	}
 
-	public void setTimeframe(Timeframe timeframe) {
-		this.timeframe = timeframe;
+	public void setSchedule(ArrayList<Pair<Day, Timeframe>> schedule) {
+		this.schedule = schedule;
 	}
 }

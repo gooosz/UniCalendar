@@ -44,8 +44,11 @@ public class Time {
 
 	public void subtract(int min) {
 		// may be < 0
-		int subtractedMin = this.min - min;
-
+		if (min < 0) {
+			add(min);
+		} else {
+			add(-1 * min);
+		}
 	}
 
 	/**

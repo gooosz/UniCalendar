@@ -21,7 +21,7 @@ public class TestModul {
 		modul = new Modul("EidP", VU.Vorlesung)
 			.withProfs(new ArrayList<Prof>())
 			.withRoom("C120")
-			.withTimeframe(new Timeframe(new Time(0)));
+			.withSchedule(Day.MONDAY, new ArrayList<>())
 	}
 
 	@Test
@@ -30,7 +30,7 @@ public class TestModul {
 		assertEquals(0, modul.getProfs().size());
 		assertEquals("C120", modul.getRoom());
 		assertEquals(VU.Vorlesung, modul.getType());
-		assertEquals("00:00", modul.getTimeframe().getStart().toString());
+		assertEquals("00:00", modul.getSchedule().get(0).getValue().getStart().toString());
 	}
 
 	@Test
