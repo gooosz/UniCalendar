@@ -79,6 +79,16 @@ public class Modul {
 		return schedule;
 	}
 
+	public ArrayList<Day> getDays() {
+		ArrayList<Day> days = new ArrayList<>();
+		for (Pair<Day, Timeframe> p: schedule) {
+			if (!days.contains(p.getKey())) {
+				days.add(p.getKey());
+			}
+		}
+		return days;
+	}
+
 	// change of profs related stuff
 
 	public void setProfs(ArrayList<Prof> profs) {
@@ -98,4 +108,17 @@ public class Modul {
 	public void setSchedule(ArrayList<Pair<Day, Timeframe>> schedule) {
 		this.schedule = schedule;
 	}
+
+	@Override
+	public boolean equals(Object m) {
+		if (!(m instanceof Modul mm)) {
+			return super.equals(m);
+		}
+		return this.getName().equals(mm.getName())
+			&& this.getProfs().equals(mm.getProfs())
+			&& this.getRoom().equals(mm.getRoom())
+			&& this.getType().equals(mm.getType())
+			&& this.getSchedule().equals(mm.getSchedule());
+	}
+
 }

@@ -73,4 +73,24 @@ public class TestModul {
 		modul.removeProf(p1);
 		assertEquals(0, modul.getProfs().size());
 	}
+
+	@Test
+	public void testGetDays() {
+		Timeframe tf1 = new Timeframe(new Time(10));
+		Timeframe tf2 = new Timeframe(new Time(15));
+		Pair<Day, Timeframe> p1 = new Pair<>(Day.MONDAY, tf1);
+		Pair<Day, Timeframe> p2 = new Pair<>(Day.TUESDAY, tf1);
+		Pair<Day, Timeframe> p3 = new Pair<>(Day.THURSDAY, tf1);
+		Pair<Day, Timeframe> p4 = new Pair<>(Day.TUESDAY, tf2);
+		modul.addToSchedule(p1);
+		modul.addToSchedule(p2);
+		modul.addToSchedule(p3);
+		modul.addToSchedule(p4);
+
+		ArrayList<Day> compared = new ArrayList<>();
+		compared.add(p1.getKey());
+		compared.add(p2.getKey());
+		compared.add(p3.getKey());
+		assertEquals(compared, modul.getDays());
+	}
 }

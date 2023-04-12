@@ -131,4 +131,10 @@ public class TestDatum {
 		Datum monday2 = new Datum(2023, 4, 17);
 		assertEquals(Day.MONDAY, monday2.getImplicitWeekday());
 	}
+
+	@Test
+	public void testConstructorWithImplicitWeekday() {
+		Datum d = new Datum(2023, 4, 13);
+		assertEquals(Day.THURSDAY, d.getImplicitWeekday());
+	}
 }
