@@ -26,6 +26,7 @@ package org.example.TUI;
  * - first event is selected by default
  * - arrow.up, arrow.down for navigating between events
  * - key 'n': create new event (Timeframe, Name, repeat, etc.)
+ * - key 'e': edit current event
  * - key 'd': delete current event
  * - key 'esc': zoom out
 */
