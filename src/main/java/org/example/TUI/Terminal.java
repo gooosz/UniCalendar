@@ -30,5 +30,5 @@ package org.example.TUI;
  * - key 'd': delete current event
  * - key 'esc': zoom out
 */
-public class Terminal {
+public interface Terminal {
 }
