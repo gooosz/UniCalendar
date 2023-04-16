@@ -2,7 +2,7 @@ package org.example.Time;
 
 import java.awt.font.TextHitInfo;
 
-public class Time {
+public class Time implements Comparable<Time> {
 	private int hour;	// 0 <= hour <= 23	// (mod 24)
 	private int min;	// 0 <= min <= 59	// (mod 60)
 

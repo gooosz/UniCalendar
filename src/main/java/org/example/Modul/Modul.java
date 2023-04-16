@@ -5,8 +5,16 @@ import org.example.Time.Day;
 import org.example.Time.Time;
 import org.example.Time.Timeframe;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+/*
+ * TODO: change String room to ArrayList<String> rooms
+ *  VU type to ArrayList<VU> types
+ *
+ * every element in schedule then has its attributes in rooms and types at respective position
+ * e.g. Vorlesung at Monday 9:00 in schedule[0] has it's room at rooms[0] and type at types[0]
+*/
+
 
 // recursive generics for writing nice monads
 public class Modul {
