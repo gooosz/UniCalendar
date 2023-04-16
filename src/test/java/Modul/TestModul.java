@@ -21,17 +21,18 @@ public class TestModul {
 
 	@BeforeEach
 	public void init() {
-		modul = new Modul("EidP", VU.Vorlesung)
+		modul = new Modul("EidP")
 			.withProfs(new ArrayList<Prof>())
-			.withRoom("C120");
+			.withRoom("C120")
+			.withType(VU.Vorlesung);
 	}
 
 	@Test
 	public void testGetter() {
 		assertEquals("EidP", modul.getName());
 		assertEquals(0, modul.getProfs().size());
-		assertEquals("C120", modul.getRoom());
-		assertEquals(VU.Vorlesung, modul.getType());
+		assertEquals("C120", modul.getRooms().get(0));
+		assertEquals(VU.Vorlesung, modul.getTypes().get(0));
 		assertTrue(modul.getSchedule().isEmpty());
 	}
 
@@ -39,13 +40,26 @@ public class TestModul {
 	public void testMonadConstructor() {
 		ArrayList<Prof> profs = new ArrayList<>();
 		profs.add(new Prof("Weil"));
-		modul = new Modul("Mathe", VU.Vorlesung)
+		modul = new Modul("Mathe")
 				.withProfs(profs)
 				.withRoom("C118");
 
 		assertEquals("Mathe", modul.getName());
 		assertEquals("Weil", modul.getProfs().get(0).getName());
-		assertEquals("C118", modul.getRoom());
+		assertEquals("C118", modul.getRooms().get(0));
+	}
+
+	@Test
+	public void testCopyConstructor() {
+		Modul m2 = new Modul("Mathe")
+			.withRoom("C120")
+			.withType(VU.Uebung);
+		modul = new Modul(m2);
+		assertEquals("Mathe", modul.getName());
+		assertEquals(0, modul.getProfs().size());
+		assertEquals("C120", modul.getRooms().get(0));
+		assertEquals(VU.Uebung, modul.getTypes().get(0));
+		assertEquals(0, modul.getSchedule().size());
 	}
 
 	@Test
@@ -92,5 +106,19 @@ public class TestModul {
 		compared.add(p2.getKey());
 		compared.add(p3.getKey());
 		assertEquals(compared, modul.getDays());
+	}
+
+	@Test
+	public void testSetProfs() {
+		ArrayList<Prof> profs = new ArrayList<>();
+		profs.add(new Prof("Weil"));
+		profs.add(new Prof("Huelsmann"));
+		modul.setProfs(profs);
+		assertEquals(profs, modul.getProfs());
+	}
+
+	@Test
+	public void testSetRooms() {
+
 	}
 }

@@ -20,19 +20,19 @@ import java.util.ArrayList;
 public class Modul {
 	private final String name;
 	private ArrayList<Prof> profs;
-	private String room;	// hoersaal
-	private final VU type;	// vorlesung or uebung
+	private ArrayList<String> rooms;	// hoersaal
+	private ArrayList<VU> types;	// vorlesung or uebung
 	private ArrayList<Pair<Day, Timeframe>> schedule;
 
-	public Modul(String name, VU type) {
+	public Modul(String name) {
 		this.name = name;
 		this.profs = new ArrayList<>();
-		this.room = "";
-		this.type = type;
+		this.rooms = new ArrayList<>();
+		this.types = new ArrayList<>();
 		this.schedule = new ArrayList<>();
 	}
 
-	public Modul(Modul m, VU type) {
+	public Modul(Modul m) {
 		/*
 		 * same name, profs
 		 * but else different
@@ -40,20 +40,32 @@ public class Modul {
 		*/
 		this.name = m.getName();
 		this.profs = m.getProfs();
-		this.room = "";
-		this.type = type;
+		this.rooms = m.getRooms();
+		this.types = m.getTypes();
 		this.schedule = m.getSchedule();
 	}
 	public Modul withProfs(ArrayList<Prof> profs) {
 		this.profs = profs;
 		return this;
 	}
+	public Modul withRooms(ArrayList<String> rooms) {
+		this.rooms = rooms;
+		return this;
+	}
 	public Modul withRoom(String room) {
-		this.room = room;
+		this.rooms.add(room);
 		return this;
 	}
 	public Modul withSchedule(ArrayList<Pair<Day, Timeframe>> schedule){
 		this.schedule = schedule;
+		return this;
+	}
+	public Modul withTypes(ArrayList<VU> types) {
+		this.types = types;
+		return this;
+	}
+	public Modul withType(VU type) {
+		this.types.add(type);
 		return this;
 	}
 
@@ -76,11 +88,11 @@ public class Modul {
 	public ArrayList<Prof> getProfs() {
 		return profs;
 	}
-	public String getRoom() {
-		return room;
+	public ArrayList<String> getRooms() {
+		return rooms;
 	}
-	public VU getType() {
-		return type;
+	public ArrayList<VU> getTypes() {
+		return types;
 	}
 
 	public ArrayList<Pair<Day, Timeframe>> getSchedule() {
@@ -109,8 +121,8 @@ public class Modul {
 		profs.remove(p);
 	}
 
-	public void setRoom(String room) {
-		this.room = room;
+	public void setRooms(ArrayList<String> rooms) {
+		this.rooms = rooms;
 	}
 
 	public void setSchedule(ArrayList<Pair<Day, Timeframe>> schedule) {
@@ -124,8 +136,8 @@ public class Modul {
 		}
 		return this.getName().equals(mm.getName())
 			&& this.getProfs().equals(mm.getProfs())
-			&& this.getRoom().equals(mm.getRoom())
-			&& this.getType().equals(mm.getType())
+			&& this.getRooms().equals(mm.getRooms())
+			&& this.getTypes().equals(mm.getTypes())
 			&& this.getSchedule().equals(mm.getSchedule());
 	}
 
